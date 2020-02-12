@@ -1,7 +1,8 @@
 package ru.javawebinar.topjava.web;
 
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.repository.MealInMemoryRepository;
+import ru.javawebinar.topjava.repository.MealRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,21 +12,21 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class MealServlet extends HttpServlet {
-    private MealService mealService = new MealService();
+    private MealRepository mealInMemoryRepository = new MealInMemoryRepository();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String requestParameterAction = getUrlParameter(request, "action");
+        String requestParameterAction =request.getParameter("action");
         if (requestParameterAction == null) {
-            request.setAttribute("mealList", mealService.getAll());
+            request.setAttribute("mealList", mealInMemoryRepository.getAll());
             request.getRequestDispatcher("/meals.jsp").forward(request, response);
         } else if (requestParameterAction.equals("delete")) {
             String id = request.getParameter("id");
-            mealService.delete(Integer.valueOf(id));
+            mealInMemoryRepository.delete(Integer.valueOf(id));
             response.sendRedirect("meals");
         } else if (requestParameterAction.equals("edit")) {
             String id = request.getParameter("id");
-            Meal meal = mealService.get(Integer.parseInt(id));
+            Meal meal = mealInMemoryRepository.get(Integer.parseInt(id));
             request.setAttribute("meal", meal);
             request.getRequestDispatcher("/mealEdit.jsp").forward(request, response);
         }
@@ -43,12 +44,9 @@ public class MealServlet extends HttpServlet {
                 localDateTime.isEmpty() ? LocalDateTime.now() : LocalDateTime.parse(localDateTime),
                 description.isEmpty() ? "Unnamed meal" : description,
                 calories.isEmpty() ? Integer.parseInt("0") : Integer.parseInt(calories));
-        mealService.save(meal);
-        request.setAttribute("mealList", mealService.getAll());
+        mealInMemoryRepository.save(meal);
+        request.setAttribute("mealList", mealInMemoryRepository.getAll());
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 
-    private String getUrlParameter(HttpServletRequest request, String parameter) {
-        return request.getParameter(parameter);
-    }
 }

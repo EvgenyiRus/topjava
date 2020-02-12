@@ -1,4 +1,3 @@
-<%@ page import="ru.javawebinar.topjava.util.TimeUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -6,7 +5,7 @@
 
 <head>
     <title>Check calories</title>
-    <link rel="stylesheet" type="text/css" href="style.css"> <!-- подключаем файл стилей -->
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <h3><a href="index.html">Home</a></h3>

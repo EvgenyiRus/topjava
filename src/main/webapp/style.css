@@ -6,7 +6,7 @@ table {
 }
 
 td,th {
-text-align: center; /* Выравнивание по центру */
-padding: 3px; /* Поля вокруг содержимого ячеек */
+    text-align: center;
+    padding: 3px;
     border: 1px solid black;
 }
