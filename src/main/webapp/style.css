@@ -1,0 +1,12 @@
+table {
+    align: center;
+    table-layout: auto;
+    width: 50%;
+    border: 1px solid black;
+}
+
+td,th {
+text-align: center; /* Выравнивание по центру */
+padding: 3px; /* Поля вокруг содержимого ячеек */
+    border: 1px solid black;
+}
