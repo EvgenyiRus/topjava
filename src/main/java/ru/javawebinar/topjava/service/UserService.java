@@ -12,33 +12,33 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class UserService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository repository) {
-        this.repository = repository;
+        this.userRepository = repository;
     }
 
     public User create(User user) {
-        return repository.save(user);
+        return userRepository.save(user);
     }
 
     public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);
+        checkNotFoundWithId(userRepository.delete(id), id);
     }
 
     public User get(int id) {
-        return checkNotFoundWithId(repository.get(id), id);
+        return checkNotFoundWithId(userRepository.get(id), id);
     }
 
     public User getByEmail(String email) {
-        return checkNotFound(repository.getByEmail(email), "email=" + email);
+        return checkNotFound(userRepository.getByEmail(email), "email=" + email);
     }
 
     public List<User> getAll() {
-        return repository.getAll();
+        return userRepository.getAll();
     }
 
     public void update(User user) {
-        checkNotFoundWithId(repository.save(user), user.getId());
+        checkNotFoundWithId(userRepository.save(user), user.getId());
     }
 }

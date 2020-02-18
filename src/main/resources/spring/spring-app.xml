@@ -12,6 +12,8 @@
         </bean>
     -->
 
+    <bean class="ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository" id="inMemoryMealRepository"/>
+    <bean class="ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository" id="inMemoryUserRepository"/>
     <!-- Not necessary, already included with component-scan -->
     <!--<context:annotation-config/>-->
 

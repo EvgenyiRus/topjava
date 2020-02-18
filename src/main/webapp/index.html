@@ -2,13 +2,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Java Enterprise (Topjava)</title>
+    <script type="text/javascript">
+        function myFunc() {
+            var method = document.getElementById("select");
+            var form = document.getElementById("form");
+            if (method.value == 3) {
+                form.action="users"
+            }
+            else{
+                form.action="meals"
+            }
+        }
+    </script>
 </head>
 <body>
 <h3>Проект <a href="https://github.com/JavaWebinar/topjava" target="_blank">Java Enterprise (Topjava)</a></h3>
 <hr>
-<ul>
-    <li><a href="users">Users</a></li>
-    <li><a href="meals">Meals</a></li>
-</ul>
+<form id="form" method="post">
+    <p>
+        Choose User <select id="select" size="1" name="users">
+        <option selected value="1">User1</option>
+        <option value="2">User2</option>
+        <option value="3">Admin</option>
+    </select>
+    </p>
+    <p><input type="submit" value="Login" onclick="myFunc()"></p>
+</form>
+<!--<ul>-->
+<!--    <li><a href="users">Users</a></li>-->
+<!--    <li><a href="meals">Meals</a></li>-->
+<!--</ul>-->
 </body>
 </html>
