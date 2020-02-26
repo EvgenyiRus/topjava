@@ -29,10 +29,10 @@ CREATE TABLE user_roles
 CREATE TABLE meals
 (
     id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-    dateTime        TIMESTAMP WITHOUT TIME ZONE,
+    date_time       TIMESTAMP               ,
     description     VARCHAR                 ,
     calories        INTEGER                 ,
     user_id         INTEGER                 NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX meals_unique_dateTimeByUser_idx ON meals (user_id,dateTime);
+CREATE UNIQUE INDEX meals_unique_dateTimeByUser_idx ON meals (user_id,date_time);
