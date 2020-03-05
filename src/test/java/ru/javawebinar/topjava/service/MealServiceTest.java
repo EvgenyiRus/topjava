@@ -1,6 +1,9 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
@@ -14,7 +17,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.rule.RuleServiceTest;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -37,19 +39,19 @@ public class MealServiceTest {
     private static StringBuilder stringBuilder = new StringBuilder("\n\n=====Summary of test execution=====\n");
 
     @AfterClass
-    public static void printLog(){
+    public static void printLog() {
         log.info(stringBuilder.toString());
     }
 
-    @Rule
-    public RuleServiceTest ruleServiceTest=new RuleServiceTest(){
-    };
+//    @Rule
+//    public RuleServiceTest ruleServiceTest=new RuleServiceTest();
 
     @Rule
     public Stopwatch stopwatch = new Stopwatch() {
         @Override
         protected void finished(long nanos, Description description) {
             stringBuilder.append(String.format("Test %s was completed for %d ms\n", description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos)));
+            log.info(String.format("Test %s was completed for %d ms\n", description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos)));
         }
     };
 
