@@ -4,7 +4,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.function.ThrowingRunnable;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
@@ -55,8 +55,8 @@ public class MealServiceTest {
         }
     };
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+//    @Rule
+//    public ExpectedException exception = ExpectedException.none();
 
     @Autowired
     private MealService service;
@@ -71,14 +71,24 @@ public class MealServiceTest {
 
     @Test
     public void deleteNotFound() {
-        exception.expect(NotFoundException.class);
-        service.delete(1, USER_ID);
+        Assert.assertThrows(NotFoundException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                service.delete(1, USER_ID);
+            }
+        });
     }
 
     @Test
     public void deleteNotOwn() {
-        exception.expect(NotFoundException.class);
-        service.delete(MEAL1_ID, ADMIN_ID);
+        Assert.assertThrows(NotFoundException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                service.delete(MEAL1_ID, ADMIN_ID);
+            }
+        });
+//        exception.expect(NotFoundException.class);
+//        service.delete(MEAL1_ID, ADMIN_ID);
     }
 
     @Test
@@ -99,14 +109,26 @@ public class MealServiceTest {
 
     @Test
     public void getNotFound() throws Exception {
-        exception.expect(NotFoundException.class);
-        service.get(1, USER_ID);
+        Assert.assertThrows(NotFoundException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                service.get(1, USER_ID);
+            }
+        });
+//        exception.expect(NotFoundException.class);
+//        service.get(1, USER_ID);
     }
 
     @Test
     public void getNotOwn() throws Exception {
-        exception.expect(NotFoundException.class);
-        service.get(MEAL1_ID, ADMIN_ID);
+        Assert.assertThrows(NotFoundException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                service.get(MEAL1_ID, ADMIN_ID);
+            }
+        });
+//        exception.expect(NotFoundException.class);
+//        service.get(MEAL1_ID, ADMIN_ID);
     }
 
     @Test
@@ -118,8 +140,14 @@ public class MealServiceTest {
 
     @Test
     public void updateNotFound() throws Exception {
-        exception.expect(NotFoundException.class);
-        service.update(MEAL1, ADMIN_ID);
+        Assert.assertThrows(NotFoundException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                service.update(MEAL1, ADMIN_ID);
+            }
+        });
+//        exception.expect(NotFoundException.class);
+//        service.update(MEAL1, ADMIN_ID);
     }
 
     @Test
