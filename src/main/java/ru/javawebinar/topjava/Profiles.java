@@ -1,12 +1,9 @@
 package ru.javawebinar.topjava;
 
 public class Profiles {
-    public static final String
-            JDBC = "jdbc",
-            JPA = "jpa",
-            DATAJPA = "datajpa";
-
-    public static final String REPOSITORY_IMPLEMENTATION = DATAJPA;
+    public static final String REPOSITORY_IMPLEMENTATION_DATAJPA = "datajpa";
+    public static final String REPOSITORY_IMPLEMENTATION_JPA = "jpa";
+    public static final String REPOSITORY_IMPLEMENTATION_JDBC = "jdbc";
 
     public static final String
             POSTGRES_DB = "postgres",
