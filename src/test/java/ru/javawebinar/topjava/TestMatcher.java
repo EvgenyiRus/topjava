@@ -1,7 +1,5 @@
 package ru.javawebinar.topjava;
 
-import ru.javawebinar.topjava.model.Meal;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
