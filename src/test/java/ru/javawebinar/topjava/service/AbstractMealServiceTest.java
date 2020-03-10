@@ -17,9 +17,9 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 //@ActiveProfiles(Profiles.REPOSITORY_IMPLEMENTATION_DATAJPA)
 public abstract class AbstractMealServiceTest extends ServiceTest {
     @Autowired
-    private MealService service;
+    protected MealService service;
     @Autowired
-    private MealRepository repository;
+    protected MealRepository repository;
 
     @Test
     public void delete() throws Exception {
@@ -98,4 +98,5 @@ public abstract class AbstractMealServiceTest extends ServiceTest {
     public void getBetweenWithNullDates() throws Exception {
         MEAL_MATCHER.assertMatch(service.getBetweenInclusive(null, null, USER_ID), MEALS);
     }
+
 }
