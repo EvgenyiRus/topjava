@@ -1,21 +1,27 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
+import ru.javawebinar.topjava.service.datajpa.UserServiceDataJpaTest;
+import ru.javawebinar.topjava.service.jdbc.UserServiceJdbcTest;
+import ru.javawebinar.topjava.service.jpa.UserServiceJpaTest;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.List;
 
+import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.UserTestData.*;
 
 public abstract class AbstractUserServiceTest extends ServiceTest {
+    private static final Logger log = getLogger("result");
+    private static StringBuilder results = new StringBuilder();
+
     @Autowired
     protected UserService service;
     @Autowired
@@ -29,14 +35,14 @@ public abstract class AbstractUserServiceTest extends ServiceTest {
         cacheManager.getCache("users").clear();
     }
 
-    @Test
-    public void create() throws Exception {
-        User newUser = getNew();
-        User created = service.create(newUser);
-        Integer newId = created.getId();
-        newUser.setId(newId);
-        USER_MATCHER.assertMatch(created, newUser);
-        USER_MATCHER.assertMatch(service.get(newId), newUser);
+    @AfterClass
+    public static void printResult() {
+        log.info("\n---------------------------------" +
+                "\nTest for User entity" +
+                UserServiceJpaTest.getLog() +
+                UserServiceJdbcTest.getLog() +
+                UserServiceDataJpaTest.getLog() +
+                "\n---------------------------------");
     }
 
     @Test(expected = DataAccessException.class)
