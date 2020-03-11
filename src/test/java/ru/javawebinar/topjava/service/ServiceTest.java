@@ -6,8 +6,6 @@ import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -50,6 +48,4 @@ public abstract class ServiceTest {
                 results +
                 "\n---------------------------------");
     }
-    @Autowired
-    private CacheManager cacheManager;
 }

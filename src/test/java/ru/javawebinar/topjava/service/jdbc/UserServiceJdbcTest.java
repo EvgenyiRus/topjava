@@ -6,5 +6,4 @@ import ru.javawebinar.topjava.service.AbstractUserServiceTest;
 
 @ActiveProfiles(Profiles.REPOSITORY_IMPLEMENTATION_JDBC)
 public class UserServiceJdbcTest extends AbstractUserServiceTest {
-
 }
