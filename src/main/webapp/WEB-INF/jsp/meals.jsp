@@ -9,10 +9,12 @@
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
-    <h3><a href="${pageContext.request.contextPath}">Home</a></h3>
+    <base href="${pageContext.request.contextPath}/"/>
+    <h3><a href="">Home</a></h3>
+<%--    <h3><a href="${pageContext.request.contextPath}">Home</a></h3>--%>
     <hr/>
     <h2><spring:message code="meal.title"/></h2>
-    <form method="get" action="meals">
+    <form method="get" action="meals/filter">
         <input type="hidden" name="action" value="filter">
         <dl>
             <%--            <dt>From Date:</dt>--%>
@@ -37,7 +39,7 @@
         </button>
     </form>
     <hr/>
-    <a href="meals?action=create">
+    <a href="meals/create">
         <dt><spring:message code="meal.add"/>:</dt>
     </a>
     <br><br>
@@ -68,8 +70,8 @@
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td><a href="meals?action=update&id=${meal.id}"><spring:message code="meal.update"/></a></td>
-                <td><a href="meals?action=delete&id=${meal.id}"><spring:message code="meal.delete"/></a></td>
+                <td><a href="meals/update?id=${meal.id}"><spring:message code="meal.update"/></a></td>
+                <td><a href="meals/delete?id=${meal.id}"><spring:message code="meal.delete"/></a></td>
             </tr>
         </c:forEach>
     </table>
