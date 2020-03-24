@@ -10,11 +10,14 @@
 
     <!-- enables scanning for @Cacheable annotation -->
     <cache:annotation-driven cache-manager="ehCacheManager"/>
+    <cache:annotation-driven cache-manager="noOpCacheManager"/>
 
     <!--https://imhoratiu.wordpress.com/2017/01/26/spring-4-with-ehcache-3-how-to/-->
     <bean id="ehCacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
         <property name="cacheManager">
             <bean class="org.springframework.cache.jcache.JCacheManagerFactoryBean" p:cacheManagerUri="classpath:cache/ehcache.xml"/>
         </property>
+    </bean>
+    <bean id = "noOpCacheManager" class="org.springframework.cache.support.NoOpCacheManager">
     </bean>
 </beans>

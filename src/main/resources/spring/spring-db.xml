@@ -16,14 +16,17 @@
     <!-- Change DB by comment/uncomment property-placeholder -->
 
     <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
-<!--    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>-->
-<!--
-    For postgres driver logging
-    It uses java.util.logging and logged via jul-to-slf4j bridge
-    https://stackoverflow.com/a/27296470/548473
--->
+    <!--    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>-->
+    <!--
+        For postgres driver logging
+        It uses java.util.logging and logged via jul-to-slf4j bridge
+        https://stackoverflow.com/a/27296470/548473
+    -->
+<!--    Сканирует все классы на аннотации-->
+    <tx:annotation-driven/>
+
     <bean class="org.springframework.beans.factory.config.MethodInvokingBean">
-        <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install" />
+        <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>
     </bean>
 
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
@@ -76,14 +79,13 @@
             <constructor-arg ref="dataSource"/>
         </bean>
 
-<!--Транзакции для JDBC-->
-<!--     https://stackoverflow.com/questions/40086182/what-is-the-use-of-datasourcetransactionmanager-and-jndiobjectfactorybean-and-jd   -->
+        <!--Транзакции для JDBC-->
+        <!--     https://stackoverflow.com/questions/40086182/what-is-the-use-of-datasourcetransactionmanager-and-jndiobjectfactorybean-and-jd   -->
         <bean id="transactionManager"
               class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
               scope="singleton">
-            <property name="dataSource" ref="dataSource" />
+            <property name="dataSource" ref="dataSource"/>
         </bean>
-        <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />
 
         <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
             <constructor-arg ref="jdbcTemplate"/>
@@ -99,21 +101,25 @@
             <property name="jpaPropertyMap">
                 <map>
                     <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="${hibernate.format_sql}"/>
-                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}" value="${hibernate.use_sql_comments}"/>
+                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
+                           value="${hibernate.use_sql_comments}"/>
                     <entry key="#{T(org.hibernate.cfg.AvailableSettings).JPA_PROXY_COMPLIANCE}" value="false"/>
                     <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}" value="${hibernate.hbm2ddl.auto}"/>-->
 
                     <!--https://github.com/hibernate/hibernate-orm/blob/master/documentation/src/main/asciidoc/userguide/chapters/caching/Caching.adoc#caching-provider-jcache-->
-                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).CACHE_REGION_FACTORY}" value="org.hibernate.cache.jcache.internal.JCacheRegionFactory"/>
-                    <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
+                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).CACHE_REGION_FACTORY}"
+                           value="org.hibernate.cache.jcache.internal.JCacheRegionFactory"/>
+                    <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}"
+                           value="org.ehcache.jsr107.EhcacheCachingProvider"/>
                     <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>
-                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/> <!--default-->
-<!--
-                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_SCRIPTS_ACTION}" value="drop-and-create"/>
-                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_SCRIPTS_CREATE_TARGET}" value="${TOPJAVA_ROOT}/config/ddl/create.ddl"/>
-                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_SCRIPTS_DROP_TARGET}" value="${TOPJAVA_ROOT}/config/ddl/drop.ddl"/>
-                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}" value="create"/>
--->
+                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/>
+                    <!--default-->
+                    <!--
+                                        <entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_SCRIPTS_ACTION}" value="drop-and-create"/>
+                                        <entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_SCRIPTS_CREATE_TARGET}" value="${TOPJAVA_ROOT}/config/ddl/create.ddl"/>
+                                        <entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_SCRIPTS_DROP_TARGET}" value="${TOPJAVA_ROOT}/config/ddl/drop.ddl"/>
+                                        <entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}" value="create"/>
+                    -->
                 </map>
             </property>
 
@@ -122,8 +128,6 @@
                 </bean>
             </property>
         </bean>
-
-        <tx:annotation-driven/>
 
         <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
