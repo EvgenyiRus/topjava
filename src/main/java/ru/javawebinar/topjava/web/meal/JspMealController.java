@@ -28,7 +28,7 @@ public class JspMealController extends AbstractMealController {
     }
 
     @PostMapping
-    public String doPost(HttpServletRequest request) {
+    public String save(HttpServletRequest request) {
         Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),

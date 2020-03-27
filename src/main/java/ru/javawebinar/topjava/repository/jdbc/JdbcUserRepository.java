@@ -5,6 +5,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -67,12 +68,11 @@ public class JdbcUserRepository implements UserRepository {
         return jdbcTemplate.update("DELETE FROM users WHERE id=?", id) != 0;
     }
 
-    @Transactional
-    public void deleteRoles(int id) {
+    private void deleteRoles(int id) {
         jdbcTemplate.update("Delete from user_roles where user_id:=?", id);
     }
 
-    public void saveRoles(@Valid User user) {
+    private void saveRoles(@Valid User user) {
         jdbcTemplate.batchUpdate(
                 "Insert into user_roles (user_id, role) values (?,?)",
                 user.getRoles(),
@@ -83,9 +83,7 @@ public class JdbcUserRepository implements UserRepository {
                 });
     }
 
-
-    @Transactional
-    public void editRoles(@Valid User user) {
+    private void editRoles(@Valid User user) {
         jdbcTemplate.batchUpdate("Update user_roles set role=? where user_id=?", user.getRoles(), user.getRoles().size(),
                 (ps, role) -> {
                     ps.setString(1, role.name());
@@ -123,6 +121,7 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         List<User> users = jdbcTemplate.query("SELECT * FROM users ORDER BY name, email", ROW_MAPPER);
+        //ROW_MAPPER.mapRow();
         users.stream().map(user -> setRole(user)).collect(Collectors.toList());
         return users;//jdbcTemplate.query("SELECT * FROM users ORDER BY name, email", ROW_MAPPER);
     }

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Role;
@@ -15,14 +16,17 @@ import ru.javawebinar.topjava.repository.JpaUtil;
 import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import javax.persistence.EntityManagerFactory;
 import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static ru.javawebinar.topjava.UserTestData.*;
 
 public abstract class AbstractUserServiceTest extends AbstractServiceTest {
+
     @Autowired
     protected UserService service;
 
@@ -30,9 +34,10 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private UserRepository repository;
 
-//    @Autowired
-//    @Qualifier("noOpCacheManager")
-//    private CacheManager cacheManager;
+    @Autowired
+    @Qualifier("noOpCacheManager")
+    //@Qualifier("ehCacheManager")
+    private CacheManager cacheManager;
 
     @Autowired(required = false)
     protected JpaUtil jpaUtil;
@@ -43,6 +48,11 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         if (!checkProfile(Profiles.JDBC)) {
             jpaUtil.clear2ndLevelHibernateCache();
         }
+    }
+
+    @Test
+    public void cacheIsNull(){
+        Assert.assertTrue(cacheManager.getCacheNames().isEmpty());
     }
 
     @Test
@@ -105,7 +115,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     public void createWithException() throws Exception {
-        Assume.assumeFalse(checkProfile(Profiles.JDBC));
+        //Assume.assumeFalse(checkProfile(Profiles.JDBC));
         validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);

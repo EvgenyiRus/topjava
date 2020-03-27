@@ -7,12 +7,11 @@
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
-    <base href="${pageContext.request.contextPath}/"/>
     <h3><a href="">Home</a></h3>
     <%--    <h3><a href="${pageContext.request.contextPath}">Home</a></h3>--%>
     <hr>
     <%--    <h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>--%>
-    <h2><spring:message code="${meal.id==null ? 'meal.newTitle': 'meal.editTitle'}"/></h2>
+    <h2><spring:message code="${meal.isNew() ? 'meal.newTitle': 'meal.editTitle'}"/></h2>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <form method="post" action="meals">
         <input type="hidden" name="id" value="${meal.id}">

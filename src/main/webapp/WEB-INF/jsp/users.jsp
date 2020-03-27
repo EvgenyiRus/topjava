@@ -10,7 +10,6 @@
 
 <section>
     <h3><spring:message code="user.title"/></h3>
-
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>

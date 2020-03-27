@@ -9,7 +9,6 @@
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
-    <base href="${pageContext.request.contextPath}/"/>
     <h3><a href="">Home</a></h3>
 <%--    <h3><a href="${pageContext.request.contextPath}">Home</a></h3>--%>
     <hr/>
