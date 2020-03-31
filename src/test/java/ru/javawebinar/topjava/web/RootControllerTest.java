@@ -2,13 +2,18 @@ package ru.javawebinar.topjava.web;
 
 import org.assertj.core.matcher.AssertionMatcher;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.*;
 
 class RootControllerTest extends AbstractControllerTest {
@@ -25,6 +30,24 @@ class RootControllerTest extends AbstractControllerTest {
                             @Override
                             public void assertion(List<User> actual) throws AssertionError {
                                 USER_MATCHER.assertMatch(actual, ADMIN, USER);
+                            }
+                        }
+                ));
+    }
+
+    //todo мы же можем сами прописать по каким полям нужно сравнивать? с помощью hasProperty ?
+    @Test
+    void getMeals() throws Exception{
+        perform(get("/meals"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("meals"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"))
+                .andExpect(model().attribute("meals", //MealsUtil.getTos(MEALS,SecurityUtil.authUserCaloriesPerDay())));
+                        new AssertionMatcher<List<MealTo>>() {
+                            @Override
+                            public void assertion(List<MealTo> actual) throws AssertionError {
+                                MEAL_MATCHER_TO.assertMatch(actual, MealsUtil.getTos(MEALS,SecurityUtil.authUserCaloriesPerDay()));
                             }
                         }
                 ));
