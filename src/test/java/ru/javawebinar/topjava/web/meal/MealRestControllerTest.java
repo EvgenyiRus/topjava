@@ -88,34 +88,36 @@ class MealRestControllerTest extends AbstractControllerTest {
     @Test
     void filter() throws Exception {
         List<Meal> meals = List.of(MEAL1, MEAL2).stream().sorted(Comparator.comparing(Meal::getDateTime).reversed()).collect(Collectors.toList());
-        String startDateTime=MEAL1.getDateTime().toString();
-        String endDateTime=MEAL2.getDateTime().plusMinutes(1).toString();
+        String startDateTime = MEAL1.getDateTime().toString();
+        String endDateTime = MEAL2.getDateTime().plusMinutes(1).toString();
         perform(MockMvcRequestBuilders.get(REST_URL + "filter?" +
+//                .param("startDateTime",startDateTime)
+//                        .param("endDateTime",endDateTime))
 //                "startDateTime=2020-01-30T10:00:00.000" +
 //                "&endDateTime=2020-01-30T13:01:00.000"))
                 "startDateTime=" + startDateTime +
                 "&endDateTime=" + endDateTime))
-                .andExpect(status().isOk())
+                //.andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(MEAL_MATCHER_TO.contentJson(MealsUtil.getTos(meals,USER.getCaloriesPerDay())));
+                .andExpect(MEAL_MATCHER_TO.contentJson(MealsUtil.getTos(meals, USER.getCaloriesPerDay())));
     }
 
     @Test
     void filter2() throws Exception {
         List<Meal> meals = List.of(MEAL1, MEAL2).stream().sorted(Comparator.comparing(Meal::getDateTime).reversed()).collect(Collectors.toList());
-        String startDate="";//MEAL1.getDateTime().toLocalDate().toString();
-        String endDate="";//MEAL2.getDateTime().toLocalDate().toString();
-        String startTime=MEAL1.getDateTime().toLocalTime().toString();
-        String endTime=MEAL2.getDateTime().toLocalTime().plusMinutes(1).toString();
-        perform(MockMvcRequestBuilders.get(REST_URL + "filter2?" +
+        String startDate = "";//MEAL1.getDateTime().toLocalDate().toString();
+        String endDate = "";//MEAL2.getDateTime().toLocalDate().toString();
+        String startTime = MEAL1.getDateTime().toLocalTime().toString();
+        String endTime = MEAL2.getDateTime().toLocalTime().plusMinutes(1).toString();
+        perform(MockMvcRequestBuilders.get(REST_URL + "filter2?")
+                .param("startDate", startDate)
+                .param("endDate", endDate)
+                .param("startTime", startTime)
+                .param("endTime", endTime))
 //                "startDateTime=2020-01-30T10:00:00.000" +
 //                "&endDateTime=2020-01-30T13:01:00.000"))
-                "startDate=" + startDate +
-                "&endDate=" + endDate+
-                "&startTime=" + startTime +
-                "&endTime=" + endTime))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(MEAL_MATCHER_TO.contentJson(MealsUtil.getTos(meals,USER.getCaloriesPerDay())));
+                .andExpect(MEAL_MATCHER_TO.contentJson(MealsUtil.getTos(meals, USER.getCaloriesPerDay())));
     }
 }
