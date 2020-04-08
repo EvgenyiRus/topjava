@@ -17,6 +17,24 @@ function makeEditable(ctx) {
     $.ajaxSetup({cache: false});
 }
 
+function getBetween() {
+    //var url = context.ajaxUrl+"filter";
+    $.ajax({
+        type: "GET",
+        url: context.ajaxUrl+"filter",
+        data: $("#filterForm").serialize() //передаваемые данные
+    }).done(function () {
+        updateTable();
+        successNoty("filtered");
+    });//.complete(alert(context.ajaxUrl));
+}
+
+function resetFilter() {
+    //$("#filterForm")[0].reset(); //todo почему так не работает ? :(
+    $("#filterForm").find(":input").val("");
+    updateTable();//todo даже если убрать вызов этой функции - отработает одинаково
+}
+
 function add() {
     form.find(":input").val("");
     $("#editRow").modal();
@@ -72,7 +90,7 @@ function successNoty(text) {
 function failNoty(jqXHR) {
     closeNoty();
     failedNote = new Noty({
-        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;Error status: " + jqXHR.status,
+        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;Error status: " + jqXHR.status+"/"+jqXHR.messageerror,
         type: "error",
         layout: "bottomRight"
     }).show();
