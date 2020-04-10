@@ -14,11 +14,9 @@
         <div class="container">
             <h3 class="text-center"><spring:message code="meal.title"/></h3>
             <form id="filterForm" method="get" action="meals/filter">
-                <%--            <form id="filterForm">--%>
                 <dl>
                     <dt><spring:message code="meal.startDate"/>:</dt>
                     <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
-                    <%--                    <input class="form-control" type="date" name="startDate" id="startDate">--%>
                 </dl>
                 <dl>
                     <dt><spring:message code="meal.endDate"/>:</dt>
@@ -32,14 +30,15 @@
                     <dt><spring:message code="meal.endTime"/>:</dt>
                     <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
                 </dl>
-                <button class="btn btn-primary" onclick="getBetween()">
-                    <span class="fa fa-filter"></span>
-                    <spring:message code="meal.filter"/>
-                </button>
-                <button class="btn btn-primary" onclick="resetFilter()">
-                    <spring:message code="meal.reset"/>
-                </button>
+
             </form>
+            <button class="btn btn-primary" onclick="getBetween()">
+                <span class="fa fa-filter"></span>
+                <spring:message code="meal.filter"/>
+            </button>
+            <button class="btn btn-primary" onclick="resetFilter()">
+                <spring:message code="meal.reset"/>
+            </button>
             <hr>
             <%--            <a href="meals/create"><spring:message code="meal.add"/></a>--%>
             <button class="btn btn-primary" onclick="add()">

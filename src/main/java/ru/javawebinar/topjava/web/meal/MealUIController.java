@@ -53,7 +53,7 @@ public class MealUIController extends AbstractMealController {
 
 //    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 //    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    public void create(@RequestBody Meal meal, @RequestParam (required = false) Integer id) {
+//    public void create2(@RequestBody Meal meal, @RequestParam (required = false) Integer id) {
 //        if (meal.isNew()) {
 //            super.create(meal);
 //        }

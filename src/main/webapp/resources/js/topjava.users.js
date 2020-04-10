@@ -40,3 +40,23 @@ $(function () {
         }
     );
 });
+
+function checkEnabled(id) {
+    //alert($('#check').is(':checked'));
+    var check = $('#check').is(':checked');
+    $.ajax({
+        type: "POST",
+        url: context.ajaxUrl + id,
+        data: {"enabled": check}
+        //data: "enabled=" + check
+    })
+        .done(function () {
+            updateTable();
+            successNoty(check ? "enabled": "disabled");
+        })
+    ;
+    //Равносильно ли это ?
+    // $.post(context.ajaxUrl+id, {enabled: check } );
+    // updateTable();
+    // successNoty(check ? "enabled": "disabled");
+}
