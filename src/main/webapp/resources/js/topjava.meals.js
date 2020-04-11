@@ -29,29 +29,21 @@ $(function () {
                         "asc"
                     ]
                 ]
-            })
+            }),
+            updateTable: function () {
+                $.get("ajax/profile/meals/", updateTable);
+            }
         }
     );
 });
 
 function getBetween() {
-     debugger;
-    // $.get("ajax/profile/meals/filter",$("#filterForm").serialize());
-    // updateTable();
-    // successNoty("filtered");
-    $.ajax({
-        type: "GET",
-        url: context.ajaxUrl+"filter",
-        data: $("#filterForm").serialize() //передаваемые данные
-    }).done(function () {
-        updateTable();
-        successNoty("filtered");
-    });
+    $.get("ajax/profile/meals/filter", $("#filterForm").serialize()).done(updateTable);
+    successNoty("filtered");
 }
 
 function resetFilter() {
     //$("#filterForm")[0].reset();
     $("#filterForm").find(":input").val("");
-    updateTable();
-    //$.get("ajax/profile/meals/",updateTable);
+    $.get("ajax/profile/meals/", updateTable);
 }

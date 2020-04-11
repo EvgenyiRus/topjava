@@ -1,3 +1,7 @@
+// Выражение $(function(){}); - это и есть краткое определение функции jquery.
+// Данная функция включает весь код на языке javascript,
+//     который будет выполняться при загрузке страницы.
+
 // $(document).ready(function () {
 $(function () {
     makeEditable({
@@ -36,27 +40,18 @@ $(function () {
                         "asc"
                     ]
                 ]
-            })
+            }),
+            updateTable: function () {
+                $.get("ajax/admin/users/", updateTable);
+            }
         }
     );
 });
 
-function checkEnabled(id) {
+function checkEnabled(checkBox,id) {
     //alert($('#check').is(':checked'));
-    var check = $('#check').is(':checked');
-    $.ajax({
-        type: "POST",
-        url: context.ajaxUrl + id,
-        data: {"enabled": check}
-        //data: "enabled=" + check
-    })
-        .done(function () {
-            updateTable();
-            successNoty(check ? "enabled": "disabled");
-        })
-    ;
-    //Равносильно ли это ?
-    // $.post(context.ajaxUrl+id, {enabled: check } );
-    // updateTable();
-    // successNoty(check ? "enabled": "disabled");
+    var check = checkBox.is(':checked');
+    $.post(context.ajaxUrl+id, {enabled: check } );
+    checkBox.closest("tr").attr("data-userEnabled", check);
+    successNoty(check ? "enabled": "disabled");
 }

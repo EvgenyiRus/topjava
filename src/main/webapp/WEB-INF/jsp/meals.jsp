@@ -36,8 +36,8 @@
                 <span class="fa fa-filter"></span>
                 <spring:message code="meal.filter"/>
             </button>
-            <button class="btn btn-primary" onclick="resetFilter()">
-                <spring:message code="meal.reset"/>
+            <button class="btn btn-primary" onclick="resetFilter()">Сбросить
+<%--                <spring:message code="meal.reset"/>--%>
             </button>
             <hr>
             <%--            <a href="meals/create"><spring:message code="meal.add"/></a>--%>
@@ -69,7 +69,7 @@
                         <td>${meal.description}</td>
                         <td>${meal.calories}</td>
                         <td><a><span class="fa fa-pencil"></span></a></td>
-                        <td><a class="delete" id="${meal.id}"><span class="fa fa-remove"></span></a></td>
+                        <td><a class="delete" onclick="deleteRow(${meal.id})"><span class="fa fa-remove"></span></a></td>
                             <%--                        <td><a href="meals/update?id=${meal.id}"><spring:message code="common.update"/></a></td>--%>
                             <%--                        <td><a href="meals/delete?id=${meal.id}"><spring:message code="common.delete"/></a></td>--%>
                     </tr>
