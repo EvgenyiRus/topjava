@@ -1,6 +1,9 @@
+var mealUrl = "ajax/profile/meals/"
+var mealUrlFilter = "ajax/profile/meals/filter"
+
 $(function () {
     makeEditable({
-            ajaxUrl: "ajax/profile/meals/",
+            ajaxUrl: mealUrl,
             datatableApi: $("#datatable").DataTable({
                 "paging": false,
                 "info": true,
@@ -26,24 +29,24 @@ $(function () {
                 "order": [
                     [
                         0,
-                        "asc"
+                        "desc"
                     ]
                 ]
             }),
             updateTable: function () {
-                $.get("ajax/profile/meals/", updateTable);
+                $.get(mealUrlFilter, updateTable);
             }
         }
     );
 });
 
 function getBetween() {
-    $.get("ajax/profile/meals/filter", $("#filterForm").serialize()).done(updateTable);
+    $.get(mealUrlFilter, $("#filterForm").serialize()).done(updateTable);
     successNoty("filtered");
 }
 
 function resetFilter() {
     //$("#filterForm")[0].reset();
     $("#filterForm").find(":input").val("");
-    $.get("ajax/profile/meals/", updateTable);
+    $.get(mealUrl, updateTable);
 }

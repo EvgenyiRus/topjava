@@ -2,10 +2,11 @@
 // Данная функция включает весь код на языке javascript,
 //     который будет выполняться при загрузке страницы.
 
+var userUrl = "ajax/admin/users/"
 // $(document).ready(function () {
 $(function () {
     makeEditable({
-            ajaxUrl: "ajax/admin/users/",
+            ajaxUrl: userUrl,
             datatableApi: $("#datatable").DataTable({
                 "paging": false,
                 "info": true,
@@ -42,16 +43,14 @@ $(function () {
                 ]
             }),
             updateTable: function () {
-                $.get("ajax/admin/users/", updateTable);
+                $.get(userUrl, updateTable);
             }
         }
     );
 });
 
 function checkEnabled(checkBox,id) {
-    //alert($('#check').is(':checked'));
     var check = checkBox.is(':checked');
-    $.post(context.ajaxUrl+id, {enabled: check } );
-    checkBox.closest("tr").attr("data-userEnabled", check);
+    $.post(context.ajaxUrl+id, {enabled: check } ).success(checkBox.closest("tr").attr("data-userEnabled", check));
     successNoty(check ? "enabled": "disabled");
 }
