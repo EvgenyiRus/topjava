@@ -96,3 +96,23 @@ function renderDeleteBtn(data, type, row) {
         return "<a onclick='deleteRow(" + row.id + ");'><span class='fa fa-remove'></span></a>";
     }
 }
+
+jQuery.datetimepicker.setLocale('ru');
+
+jQuery('#startDate').datetimepicker({
+    timepicker:false,
+    format:'d.m.Y'
+});
+jQuery('#endDate').datetimepicker({
+    timepicker:false,
+    format:'d.m.Y'
+});
+jQuery('#startTime').datetimepicker({
+    datepicker:false,
+    format:'H:i'
+});
+jQuery('#endTime').datetimepicker({
+    datepicker:false,
+    format:'H:i'
+});
+jQuery('#dateTime').datetimepicker();
