@@ -99,14 +99,19 @@ function renderDeleteBtn(data, type, row) {
 
 jQuery.datetimepicker.setLocale('ru');
 
-jQuery('#startDate').datetimepicker({
-    timepicker:false,
-    format:'d.m.Y'
+jQuery(function(){
+    jQuery('#startDate').datetimepicker({
+        format:'Y-m-d',
+        formatDate: 'Y-m-d',
+        timepicker:false
+    });
+    jQuery('#endDate').datetimepicker({
+        format:'Y-m-d',
+        formatDate: 'Y-m-d',
+        timepicker:false
+    });
 });
-jQuery('#endDate').datetimepicker({
-    timepicker:false,
-    format:'d.m.Y'
-});
+
 jQuery('#startTime').datetimepicker({
     datepicker:false,
     format:'H:i'
@@ -115,4 +120,7 @@ jQuery('#endTime').datetimepicker({
     datepicker:false,
     format:'H:i'
 });
-jQuery('#dateTime').datetimepicker();
+jQuery('#dateTime').datetimepicker({
+    format:'Y-m-d H:i',
+    formatDate: 'Y-m-d H:i'
+});
