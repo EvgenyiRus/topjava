@@ -28,7 +28,7 @@ $(function () {
                     "data": "dateTime",
                     "render": function (date, type, row) {
                         if (type === "display") {
-                            return date.replace('T',' ').substring(0,16);//.substring(0, 16);
+                            return date.replace('T', ' ').substring(0, 16);
                         }
                         return date;
                     }
@@ -63,4 +63,19 @@ $(function () {
         }),
         updateTable: updateFilteredTable
     });
+});
+
+jQuery.datetimepicker.setLocale('ru');
+
+jQuery('#startDate,#endDate').datetimepicker({
+    format: 'Y-m-d',
+    formatDate: 'Y-m-d',
+    timepicker: false
+});
+jQuery('#startTime,#endTime').datetimepicker({
+    datepicker: false,
+    format: 'H:i'
+});
+$('#dateTime').datetimepicker({
+    format: 'Y-m-d H:i'
 });

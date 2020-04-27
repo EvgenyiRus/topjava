@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="webjars/noty/3.1.4/lib/noty.css"/>
     <link rel="stylesheet" href="webjars/datetimepicker/2.5.20/">
     <link rel="stylesheet" type="text/css" href="webjars/datetimepicker/2.5.20/jquery.datetimepicker.css/">
-<%--    <link rel="stylesheet" href="webjars/datetimepicker/2.5.20/jquery.datetimepicker.css">--%>
 
     <link rel="shortcut icon" href="resources/images/icon-meal.png">
 
@@ -26,5 +25,4 @@
     <script type="text/javascript" src="webjars/noty/3.1.4/lib/noty.min.js" defer></script>
     <script type="text/javascript" src="webjars/jquery.js" defer></script>
     <script type="text/javascript" src="webjars/datetimepicker/2.5.20/build/jquery.datetimepicker.full.min.js" defer></script>
-<%--    <script type="text/javascript" src="webjars/datetimepicker/2.5.20/build/jquery.datetimepicker.full.min.js" defer></script>--%>
 </head>

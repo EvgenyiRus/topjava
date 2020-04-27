@@ -18,11 +18,13 @@ function add() {
 }
 
 function updateRow(id) {
-    debugger;
     $("#modalTitle").html(i18n["editTitle"]);
     $.get(context.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            //form.find("input[name='" + key + "']").val(value);
+            form.find("input[name='" + key + "']").val(
+                                key === "dateTime" ? value.replace('T', ' ').substr(0, 16) : value
+                                );
         });
         $('#editRow').modal();
     });
@@ -96,31 +98,3 @@ function renderDeleteBtn(data, type, row) {
         return "<a onclick='deleteRow(" + row.id + ");'><span class='fa fa-remove'></span></a>";
     }
 }
-
-jQuery.datetimepicker.setLocale('ru');
-
-jQuery(function(){
-    jQuery('#startDate').datetimepicker({
-        format:'Y-m-d',
-        formatDate: 'Y-m-d',
-        timepicker:false
-    });
-    jQuery('#endDate').datetimepicker({
-        format:'Y-m-d',
-        formatDate: 'Y-m-d',
-        timepicker:false
-    });
-});
-
-jQuery('#startTime').datetimepicker({
-    datepicker:false,
-    format:'H:i'
-});
-jQuery('#endTime').datetimepicker({
-    datepicker:false,
-    format:'H:i'
-});
-jQuery('#dateTime').datetimepicker({
-    format:'Y-m-d H:i',
-    formatDate: 'Y-m-d H:i'
-});

@@ -21,7 +21,7 @@ public class MealTo extends BaseTo {
     private final String description;
 
     @Range(min = 10, max = 5000)
-    @NotNull(message = "Value must more 0")
+    @NotNull(message = "Value must be more 0")
     private final Integer calories;
 
     private final Boolean excess;

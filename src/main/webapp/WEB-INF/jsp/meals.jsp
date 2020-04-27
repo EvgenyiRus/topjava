@@ -93,15 +93,13 @@
             <div class="modal-body">
                 <form id="detailsForm">
                     <input type="hidden" id="id" name="id">
-
                     <div class="form-group">
                         <label for="dateTime" class="col-form-label"><spring:message code="meal.dateTime"/></label>
-                        <%--                        <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"--%>
-                        <%--                               placeholder="<spring:message code="meal.dateTime"/>">--%>
+<%--                                                <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"--%>
+<%--                                                       placeholder="<spring:message code="meal.dateTime"/>">--%>
                         <input class="form-control" id="dateTime" name="dateTime"
                                placeholder="<spring:message code="meal.dateTime"/>">
                     </div>
-
                     <div class="form-group">
                         <label for="description" class="col-form-label"><spring:message
                                 code="meal.description"/></label>
