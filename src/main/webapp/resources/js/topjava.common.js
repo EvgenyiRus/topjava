@@ -17,6 +17,7 @@ function makeEditable(ctx) {
 
     form = $('#detailsForm');
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
+        debugger
         failNoty(jqXHR);
     });
 
@@ -95,6 +96,7 @@ function successNoty(key) {
 
 function failNoty(jqXHR) {
     closeNoty();
+    debugger;
     var errorInfo = JSON.parse(jqXHR.responseText);
     failedNote = new Noty({
         text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + i18n["common.errorStatus"] + ": " + jqXHR.status + "<br>" + errorInfo.type + "<br>" + errorInfo.detail,
