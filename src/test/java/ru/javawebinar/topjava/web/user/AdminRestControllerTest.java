@@ -96,7 +96,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(updated)))
+                .content(UserTestData.jsonWithPassword(updated, "password")))
                 .andExpect(status().isNoContent());
 
         USER_MATCHER.assertMatch(userService.get(USER_ID), updated);
@@ -108,7 +108,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
-                .content(UserTestData.jsonWithPassword(newUser, "newPass")))
+                .content(UserTestData.jsonWithPassword(newUser, "password")))
                 .andExpect(status().isCreated());
 
         User created = readFromJson(action, User.class);
@@ -163,7 +163,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional(propagation = Propagation.NEVER) //Отключаем транзакцию
     void updateWithDuplicateEmail() throws Exception {
-        User updatedUser = new User(USER_ID, "testName", USER.getEmail(), "password", 2005, Role.USER);
+        User updatedUser = new User(USER_ID, "testName", ADMIN.getEmail(), "password", 2005, Role.USER);
         perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))

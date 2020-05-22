@@ -4,22 +4,17 @@ package ru.javawebinar.topjava.web.meal;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
-import ru.javawebinar.topjava.web.json.JacksonObjectMapper;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-
-import static java.time.LocalDateTime.of;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -117,9 +112,8 @@ class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void createDuplicate() throws Exception{
-        //Meal mealInvalid= new Meal(null, of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
-        //todo Здесь я должен был добавить новую еду с датой, которая уже сесть в БД, и получить HTTP.STATUS = 409, но не сработало :(
+    @Transactional(propagation = Propagation.NEVER) //Отключаем транзакцию
+    void createDuplicateDateTime() throws Exception{
         Meal mealInvalid= new Meal(null, MEAL1.getDateTime(), "Завтрак", 500);
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -130,6 +124,17 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    @Transactional(propagation = Propagation.NEVER) //Отключаем транзакцию
+    void updateDuplicateDateTime() throws Exception{
+        Meal mealInvalid=new Meal(MEAL1_ID,MEAL2.getDateTime(),"завтрак",100);
+        perform(MockMvcRequestBuilders.put(REST_URL + MEAL1_ID).contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(mealInvalid))
+                .with(userHttpBasic(USER)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.type").value("DATA_ERROR"))
+                .andDo(print());
+    }
 
     @Test
     void updateInvalid() throws Exception{
@@ -138,7 +143,7 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(mealInvalid))
                 .with(userHttpBasic(USER)))
-                .andExpect(status().isInternalServerError())
+                .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("$.type").value("VALIDATION_ERROR"))
                 .andDo(print());
     }

@@ -19,25 +19,11 @@ public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public UserEmailValidator emailValidator;
+    private UserEmailValidator emailValidator;
 
-    // Validate manually cause UniqueMailValidator doesn't work for update with user.id==null
-    private WebDataBinder binder;
-
-    //    //Set a form validator
-//    @InitBinder
-//    protected void initBinder(WebDataBinder binder) {
-//        if (binder.getTarget() != null && emailValidator.supports(binder.getTarget().getClass())) {
-//            binder.addValidators(emailValidator);
-//            this.binder = binder;
-//        }
-//    }
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        if (binder.getTarget() != null && emailValidator.supports(binder.getTarget().getClass())) {
-            binder.addValidators(emailValidator);
-            this.binder = binder;
-        }
+        binder.addValidators(emailValidator);
     }
 
     @Autowired
