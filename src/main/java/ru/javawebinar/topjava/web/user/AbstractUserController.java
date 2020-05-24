@@ -76,11 +76,4 @@ public abstract class AbstractUserController {
         log.info(enabled ? "enable {}" : "disable {}", id);
         service.enable(id, enabled);
     }
-
-    public boolean checkEmail(UserTo creating) {
-        User existing = getByMail(creating.getEmail());
-        if (existing.getEmail().equals(creating.getEmail()))
-            return true;
-        return false;
-    }
 }

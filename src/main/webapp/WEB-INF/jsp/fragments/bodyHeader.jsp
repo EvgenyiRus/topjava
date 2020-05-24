@@ -27,9 +27,9 @@ Language : <a href="?language=en">English</a>|<a href="?language=ru">Russia</a>
             </form:form>
         </sec:authorize>
         <ul>
-<%--        https://stackoverflow.com/questions/1256562/java-httpservletrequest-get-url-in-browsers-url-bar--%>
+            <%--https://stackoverflow.com/questions/1256562/java-httpservletrequest-get-url-in-browsers-url-bar--%>
             <%--requestScope используется для получения атрибутов из области запроса--%>
-<%--    javax.servlet.forward.request_uri - URL страницы на которую переходим--%>
+            <%--javax.servlet.forward.request_uri - URL страницы на которую переходим--%>
             <li><a href="${requestScope['javax.servlet.forward.request_uri']}?language=en">English</a></li>
             <li><a href="${requestScope['javax.servlet.forward.request_uri']}?language=ru">Russia</a></li>
         </ul>

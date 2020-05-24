@@ -50,15 +50,6 @@ public class MealUIController extends AbstractMealController {
 //        return ResponseEntity.ok().build();
 //    }
 
-    //    @PostMapping
-//
-//    public void createOrUpdate(@Valid Meal meal) {
-//        if (meal.isNew()) {
-//            super.create(meal);
-//        } else {
-//            super.update(meal, meal.getId());
-//        }
-//    }
     @PostMapping
     @ResponseStatus(NO_CONTENT)
     public void createOrUpdate(@Valid Meal meal) {

@@ -26,7 +26,7 @@ public class UserEmailValidator implements Validator {
         //RestController принимает User, UIController принимает UserTo
         HasEmail user = (HasEmail) object;
         User validUser = repository.getByEmail(user.getEmail().toLowerCase());
-        if (validUser != null && validUser.getId()==user.getId()) {
+        if (validUser != null && !(validUser.getId().equals(user.getId()))) {
             errors.rejectValue("email", ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL);
         }
     }
